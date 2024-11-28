@@ -1,4 +1,3 @@
-// src/components/ContentDisplay.js
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -12,6 +11,10 @@ const ContentDisplay = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  // Debug: Log the fetched brief and sources
+  console.log('Brief:', brief);
+  console.log('Sources:', sources);
 
   return (
     <div className="content-display">
@@ -33,4 +36,6 @@ const ContentDisplay = () => {
 };
 
 export default ContentDisplay;
+
+
 

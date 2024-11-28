@@ -1,55 +1,24 @@
 import axios from 'axios';
 
 // Your Hugging Face API Key
-const API_KEY = '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';
+const API_KEY = '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';  
 
 // Define your models here
 const MODELS = {
   gpt2: 'gpt2',
-  gpt3: 'openai-community/gpt-3.5-turbo', // Example fallback model
-  bart: 'facebook/bart-large-cnn', // Example summarization model
-  t5: 't5-small', // Another example summarization model
-};
-
-// Function to generate text with retry logic for different models
-export const generateText = async (inputText, model = MODELS.gpt2) => {
-  try {
-    const endpoint = `https://api-inference.huggingface.co/models/${model}`;
-
-    // Send a POST request to the Hugging Face API
-    const response = await axios.post(
-      endpoint,
-      { inputs: inputText },
-      {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-
-    // Return the generated text from the response
-    return response.data?.[0]?.generated_text || 'No text generated';
-  } catch (error) {
-    console.error('Error generating text:', error.response?.data || error.message);
-
-    // Fallback to another model if the primary model fails
-    if (error.response?.data?.error === 'Model is currently loading') {
-      console.log('Switching to fallback model');
-      return generateText(inputText, MODELS.gpt3); // Example fallback to gpt-3.5
-    } else {
-      throw new Error('Failed to generate text');
-    }
-  }
+  gpt3: 'openai-community/gpt-3.5-turbo',
+  bart: 'facebook/bart-large-cnn',
+  t5: 't5-small',
+  mistral7B: 'mistralai/Mistral-7B-Instruct-v0.3',
 };
 
 // Function to fetch summary using a specified model
-export const fetchSummaryAndSources = async (inputText, model = MODELS.bart) => {
+export const fetchSummaryAndSources = async (inputText, model = MODELS.mistral7B) => {
   try {
-    const endpoint = `https://api-inference.huggingface.co/models/${model}`;
-    const prompt = `Provide a detailed, informative explanation about ${inputText}.`;
+    const prompt = inputText || `Provide a simple and informative summary of Artificial Intelligence (AI), explaining its key concepts, real-world applications, and why it matters. Include examples like self-driving cars, smart assistants, and AI in healthcare. The summary should be understandable to a general audience, focusing on clarity and simplicity.`;
 
-    // Send a POST request to the Hugging Face API
+    const endpoint = `https://api-inference.huggingface.co/models/${model}`;
+
     const response = await axios.post(
       endpoint,
       { inputs: prompt },
@@ -61,13 +30,29 @@ export const fetchSummaryAndSources = async (inputText, model = MODELS.bart) => 
       }
     );
 
-    // Return the summary text from the response
-    return response.data?.[0]?.generated_text || 'No summary generated';
+    // Log the API response for debugging purposes
+    console.log('API Response:', response.data);
+
+    // Check the response format and structure
+    const generatedText = response.data?.[0]?.generated_text || 'No summary generated';
+    const sources = response.data?.[0]?.generated_sources || [];  // Assuming sources are available
+
+    return { brief: generatedText, sources };  // Return both fields
+
   } catch (error) {
     console.error('Error fetching summary and sources:', error.response?.data || error.message);
     throw new Error('Failed to fetch summary and sources');
   }
 };
+
+
+
+
+
+
+
+
+
 
 
 

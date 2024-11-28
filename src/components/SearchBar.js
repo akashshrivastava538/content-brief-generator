@@ -1,56 +1,31 @@
 import React, { useState } from 'react';
-import { generateText, fetchSummaryAndSources } from '../api';
+import { useDispatch } from 'react-redux';
+import { fetchContent } from '../store/contentSlice';
 
-const SearchComponent = () => {
+const SearchBar = () => {
   const [inputText, setInputText] = useState('');
-  const [generatedText, setGeneratedText] = useState('');
-  const [selectedModel, setSelectedModel] = useState('gpt2');  // Default model
+  const dispatch = useDispatch();
 
-  // Handle model selection
-  const handleModelChange = (event) => {
-    setSelectedModel(event.target.value);
-  };
-
-  // Handle the text generation request
-  const handleGenerateText = async () => {
-    try {
-      const response = await generateText(inputText, selectedModel);
-      setGeneratedText(response);
-    } catch (error) {
-      setGeneratedText('Error generating text');
+  const handleSearch = () => {
+    if (inputText) {
+      dispatch(fetchContent(inputText));  // Dispatching the fetchContent action
     }
   };
 
   return (
-    <div>
-      <h1>Search and Generate Text</h1>
-      
-      <label>Select Model:</label>
-      <select onChange={handleModelChange} value={selectedModel}>
-        <option value="gpt2">GPT-2</option>
-        <option value="gpt3">GPT-3.5</option>
-        <option value="bart">BART</option>
-        <option value="t5">T5</option>
-      </select>
-
-      <div>
-        <input 
-          type="text" 
-          value={inputText} 
-          onChange={(e) => setInputText(e.target.value)} 
-          placeholder="Enter a topic" 
-        />
-        <button onClick={handleGenerateText}>Generate Text</button>
-      </div>
-
-      <div>
-        <h3>Generated Text:</h3>
-        <p>{generatedText}</p>
-      </div>
+    <div className="search-bar">
+      <input
+        type="text"
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+        placeholder="Enter a topic"
+      />
+      <button onClick={handleSearch}>Search</button>
     </div>
   );
 };
 
-export default SearchComponent;
+export default SearchBar;
+
 
 

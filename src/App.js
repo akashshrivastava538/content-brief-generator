@@ -1,7 +1,6 @@
-// src/App.js
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from './store/store';  // Correctly import the store
+import store from './store/store';
 import SearchBar from './components/SearchBar';
 import ContentDisplay from './components/ContentDisplay';
 import './styles.css';
@@ -19,6 +18,7 @@ const App = () => {
 };
 
 export default App;
+
 
 
 
