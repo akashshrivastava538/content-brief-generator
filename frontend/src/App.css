@@ -43,5 +43,48 @@
   background-color: #f9f9f9; /* Light background color */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: lightblue;
+  padding: 10px 20px;
+  border-bottom: 1px solid black;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+}
+
+.profile {
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+}
+/* Default button styling */
+.generate-btn {
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover state for the button */
+.generate-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Styling for the clicked state */
+.generate-btn.clicked {
+  background-color: #28a745; /* Green for clicked state */
+}
+
+
 
 

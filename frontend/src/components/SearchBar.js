@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const SearchBar = ({ onSearch }) => {
   const [topic, setTopic] = useState('');
+  const [isClicked, setIsClicked] = useState(false); // State to track button click
 
   const handleInputChange = (e) => {
     setTopic(e.target.value);
@@ -9,7 +10,13 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSearch = () => {
     if (topic.trim()) {
-      onSearch(topic);  // Trigger search when topic is provided
+      setIsClicked(true); // Change button state when clicked
+      onSearch(topic); // Trigger search when topic is provided
+
+      // Optionally reset the button color after some time
+      setTimeout(() => {
+        setIsClicked(false);
+      }, 500); // Reset after 0.5 seconds
     }
   };
 
@@ -21,7 +28,12 @@ const SearchBar = ({ onSearch }) => {
         onChange={handleInputChange}
         placeholder="Enter topic"
       />
-      <button onClick={handleSearch}>Generate Brief</button>
+      <button
+        className={`generate-btn ${isClicked ? 'clicked' : ''}`} // Apply dynamic class
+        onClick={handleSearch}
+      >
+        Generate Brief
+      </button>
     </div>
   );
 };
