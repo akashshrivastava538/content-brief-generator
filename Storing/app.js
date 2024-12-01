@@ -21,10 +21,10 @@ app.post("/generate-brief", async (req, res) => {
     Generate a detailed content brief for the topic: "${topic}".
 
     Include the following:
-    1. Compelling headings and subheadings to structure the content effectively.
+    1. Compelling structure the content effectively.
     2. Key points focusing on reader engagement.
     3. Include proper external links to authoritative sources to add credibility.
-    4. Ensure the tone is natural, engaging, and hooks the reader from the beginning.
+    4. Ensure the tone is reader from the beginning.
   `;
 
   try {
