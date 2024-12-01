@@ -19,7 +19,7 @@ const App = () => {
   const fetchContent = async (topic) => {
     setIsLoading(true); // Start loading
     try {
-      const response = await fetch('http://localhost:5000/generate-brief', {
+      const response = await fetch('https://content-brief-generator-1vu6.vercel.app/api/endpoint', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
