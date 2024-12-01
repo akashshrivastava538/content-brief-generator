@@ -3,6 +3,8 @@ import SearchBar from './components/SearchBar';
 import ContentDisplay from './components/ContentDisplay';
 import './App.css';
 
+const ENDPOINT = "https://content-brief-generator-8wem.onrender.com";
+
 const App = () => {
   const [brief, setBrief] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +21,7 @@ const App = () => {
   const fetchContent = async (topic) => {
     setIsLoading(true); // Start loading
     try {
-      const response = await fetch('https://content-brief-generator-1vu6.vercel.app/api/endpoint', {
+      const response = await fetch(`${ENDPOINT}/generate-brief`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
